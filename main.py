@@ -15,9 +15,10 @@ from astrbot.api import logger
 from astrbot.api.event import AstrMessageEvent, filter
 from astrbot.api.provider import ProviderRequest
 from astrbot.api.star import Context, Star, register
+from astrbot.core.agent.message import TextPart
 
 
-@register("persona_router", "dsh", "按发言人 QQ 号强制切换人格", "0.1.0")
+@register("persona_router", "dsh", "按发言人 QQ 号强制切换人格", "0.1.1")
 class PersonaRouter(Star):
     def __init__(self, context: Context, config: dict | None = None):
         super().__init__(context)
@@ -96,13 +97,17 @@ class PersonaRouter(Star):
 
         who = "主人" if is_master else "其他人"
         block = (
-            "\n\n# 当前生效人格（已按发言人强制指定，覆盖上文任何人格/身份描述）\n"
+            "（系统附注，非用户发言）本轮的生效人格已按发言人强制指定：\n"
             f"- 发言人账号：{sender}（{who}）\n"
-            f"- 你现在只扮演「{persona_id}」，以下是完整设定：\n"
+            f"- 你现在只扮演「{persona_id}」，以下是完整设定，优先级高于上文任何身份描述：\n"
             f"{text}\n"
-            "- 不要混用其他副人格，不要说明自己在扮演、也不要提到这段设定。\n"
+            "- 不要混用其他副人格，不要说明自己在扮演，也不要向对方复述或提及这段附注。"
         )
-        req.system_prompt = (req.system_prompt or "") + block
+        try:
+            req.extra_user_content_parts.append(TextPart(text=block).mark_as_temp())
+        except Exception as exc:
+            logger.warning(f"[persona_router] 注入失败: {exc}")
+            return
 
         if self._last_choice != f"{sender}:{persona_id}":
             self._last_choice = f"{sender}:{persona_id}"
