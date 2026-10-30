@@ -1,5 +1,5 @@
 # 人格分流（astrbot_plugin_persona_router）
-
+需搭配对话者身份注入（astrbot_plugin_sender_context）使用
 **按发言人 QQ 号强制切换人格** —— 同一个群里，对主人用一副人格，对其他人用另一副。
 
 AstrBot 原生的人格是**会话级**的：一个群只能挂一个人格。因此「群里某个人特殊对待」这件事，
