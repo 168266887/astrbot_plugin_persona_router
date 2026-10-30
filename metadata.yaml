@@ -1,0 +1,6 @@
+name: astrbot_plugin_persona_router
+display_name: 人格分流
+desc: 按发言人 QQ 号强制切换人格：指定的人用主人格，其他人用默认人格
+version: v0.1.0
+author: dsh
+repo: https://github.com/yourname/astrbot_plugin_persona_router

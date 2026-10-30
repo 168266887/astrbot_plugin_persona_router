@@ -1,0 +1,32 @@
+{
+  "master_qq": {
+    "description": "主人格对应的 QQ 号",
+    "type": "string",
+    "hint": "只有这个号会拿到主人格，其余人走默认人格",
+    "default": ""
+  },
+  "master_persona": {
+    "description": "主人格名称",
+    "type": "string",
+    "hint": "填 AstrBot 人格设定里的名字，例如 猫娘",
+    "default": "猫娘"
+  },
+  "default_persona": {
+    "description": "其他所有人的人格名称",
+    "type": "string",
+    "hint": "例如 贴吧鱼",
+    "default": "贴吧鱼"
+  },
+  "group_ids": {
+    "description": "只在指定群生效",
+    "type": "list",
+    "hint": "留空 = 所有会话都按 QQ 号分流",
+    "default": []
+  },
+  "max_chars": {
+    "description": "人格文本注入上限",
+    "type": "int",
+    "hint": "默认 4000，够放长人格",
+    "default": 4000
+  }
+}
